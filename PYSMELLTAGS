@@ -1,0 +1,13 @@
+{'CLASSES': {},
+ 'CONSTANTS': ['gatom.gatom.env', 'gatom.gatom.template', 'server.handler', 'server.httpd'],
+ 'FUNCTIONS': [],
+ 'HIERARCHY': ['gatom.conf', 'gatom.gatom', 'gatom', 'server'],
+ 'POINTERS': {'gatom.gatom.Environment': 'jinja2.Environment',
+              'gatom.gatom.PackageLoader': 'jinja2.PackageLoader',
+              'gatom.gatom.argparse': 'argparse',
+              'gatom.gatom.os': 'os',
+              'gatom.gatom.sys': 'sys',
+              'server.SimpleHTTPServer': 'SimpleHTTPServer',
+              'server.SocketServer': 'SocketServer',
+              'server.os': 'os',
+              'server.sys': 'sys'}}

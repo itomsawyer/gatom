@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="Modern UI CSS">
+    <meta name="author" content="Sergey Pimenov">
+    <meta name="keywords" content="windows 8, modern style, modern ui, style, modern, css, framework">
+
+    <link href="css/modern.css" rel="stylesheet">
+    <link href="css/theme-dark.css" rel="stylesheet">
+    <link href="css/modern-responsive.css" rel="stylesheet">
+
+    <script src="js/assets/jquery-1.8.2.min.js"></script>
+    <script src="js/assets/google-analytics.js"></script>
+    <script src="js/assets/jquery.mousewheel.min.js"></script>
+    <script src="js/assets/github.info.js"></script>
+    <script src="js/modern/tile-slider.js"></script>
+    <script src="js/modern/tile-drag.js"></script>
+
+    <title>{{ title }}</title>
+
+    <style>
+        body {
+            background: #1d1d1d;
+        }
+    </style>
+
+    <script>
+        function Resize(){
+            var tiles_area = 0;
+            $(".tile-group").each(function(){
+                tiles_area += $(this).outerWidth() + 80;
+
+            });
+
+            $(".tiles").css("width", 120 + tiles_area + 20);
+
+            $(".page").css({
+                height: $(document).height() - 20,
+                width: $(document).width()
+            });
+        }
+
+        function AddMouseWheel(){
+            $("body").mousewheel(function(event, delta){
+                var scroll_value = delta * 50;
+                if (jQuery.browser.webkit) {
+                    this.scrollLeft -= scroll_value;
+
+                } else {
+                    document.documentElement.scrollLeft -= scroll_value;
+                }
+                return false;
+            });
+        }
+
+        $(function(){
+
+            Resize();
+            AddMouseWheel();
+
+        })
+
+
+    </script>
+</head>
+<body class="modern-ui" onresize="Resize()">
+<div class="page secondary fixed-header">
+    <div class="page-header ">
+        <div class="page-header-content">
+            <div class="user-login">
+                <a href="#">
+                    <div class="name">
+                        <span class="first-name">Sergey</span>
+                        <span class="last-name">Pimenov</span>
+                    </div>
+                    <div class="avatar">
+                        <img src="images/myface.jpg"/>
+                    </div>
+                </a>
+            </div>
+
+            <h1>Start</h1>
+        </div>
+    </div>
+
+    <div class="page-region">
+        <div class="page-region-content tiles">
+            <div class="tile-group tile-drag">
+                <div class="tile image outline-color-green">
+                    <div class="tile-content">
+                        <img src="images/myface.jpg" alt="">
+                    </div>
+                </div>
+
+                <div class="tile icon">
+                    <div class="tile-content">
+                        <img src="images/Mail128.png"/>
+                    </div>
+                    <div class="brand">
+                        <div class="badge">10</div>
+                        <div class="name">Mail</div>
+                    </div>
+                </div>
+
+                <div class="tile bg-color-orangeDark icon">
+                    <b class="check"></b>
+                    <div class="tile-content">
+                        <img src="images/Video128.png" alt="" />
+                    </div>
+                    <div class="brand">
+                        <span class="name">Video</span>
+                    </div>
+                </div>
+
+                {% for album in gallery %}
+                <div class="tile double image outline-color-green">
+                    <div class="tile-content">
+                        <!--<img src="images/5.jpg" alt="" /> -->
+                        <img src="" alt="" />
+                    </div>
+                    <div class="brand">
+                        <span class="name">{{ album.name }}</span>
+                        <div class="badge bg-color-orange">{{ album.nums }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+           
+        </div>
+    </div>
+</div>
+<a href='http://hit.ua/?x=19154' target='_blank'>
+    <script language="javascript" type="text/javascript"><!--
+    Cd=document;Cr="&"+Math.random();Cp="&s=1";
+    Cd.cookie="b=b";if(Cd.cookie)Cp+="&c=1";
+    Cp+="&t="+(new Date()).getTimezoneOffset();
+    if(self!=top)Cp+="&f=1";
+    //--></script>
+    <script language="javascript1.1" type="text/javascript"><!--
+    if(navigator.javaEnabled())Cp+="&j=1";
+    //--></script>
+    <script language="javascript1.2" type="text/javascript"><!--
+    if(typeof(screen)!='undefined')Cp+="&w="+screen.width+"&h="+
+            screen.height+"&d="+(screen.colorDepth?screen.colorDepth:screen.pixelDepth);
+    //--></script>
+    <script language="javascript" type="text/javascript"><!--
+    Cd.write("<img src='http://c.hit.ua/hit?i=19154&g=0&x=2"+Cp+Cr+
+            "&r="+escape(Cd.referrer)+"&u="+escape(window.location.href)+
+            "' border='0' wi"+"dth='1' he"+"ight='1'/>");
+    //--></script>
+    <noscript>
+        <img src='http://c.hit.ua/hit?i=19154&amp;g=0&amp;x=2' border='0'/>
+    </noscript></a>
+<!-- / hit.ua -->
+
+</body>
+</html>
