@@ -3,15 +3,12 @@ from jinja2 import  PackageLoader , Environment
 from PIL import Image
 import sys,os
 import imghdr
+import shutil
 
 sys.path.append(os.path.join(os.path.dirname(__file__),os.path.pardir))
 
 env = Environment(loader = PackageLoader('gatom','templates'))
 
-"""
-template = env.get_template('menu.jinja2')
-print template.render()
-"""
 
 class album:
     name = 'gallery'
@@ -35,14 +32,17 @@ def runHttpServer(documentRoot,port):
     httpd.serve_forever()
 
 def prepare_image(src,dst):
-    im = Image.open(src)
-    im.save(dst)
-    pass
+    if not os.path.exists(dst) :
+        im = Image.open(src)
+        im.save(dst)
 
-def generator_html(dst ,name ,images,albums):
-    print images
-    print albums
-    pass
+def generator_html(path,template_name ,args):
+    template = env.get_template(template_name)
+    template_content = template.render(**args)
+    # save static file
+    new_file = file(path, 'w')
+    new_file.write(template_content)
+    new_file.close()
 
 
 def createAlbums(srcPath,dstPath,urlPath):
@@ -50,9 +50,12 @@ def createAlbums(srcPath,dstPath,urlPath):
     albums_list = list()
     album_item = album()
 
+
     album_item.name =os.path.basename(dstPath)
     album_item.url = urlPath
-    print album_item.url
+
+    print "Processing Album " + album_item.name + " in " +dstPath + " ..."
+    
 
     for obj in  os.listdir(srcPath):
         src_obj_path = os.path.join(srcPath,obj)
@@ -61,13 +64,14 @@ def createAlbums(srcPath,dstPath,urlPath):
         if os.path.isfile(src_obj_path) and ( imghdr.what(src_obj_path) is not None ):
             image = photo()
             album_item.totalPhoto +=1
-            if album_item.cover is '':
-                album_item.cover = image.url 
 
             prepare_image(src_obj_path,dst_obj_path)
 
             image.name = obj
-            image.url = urlPath + '/' +obj
+            image.url = os.path.join(urlPath ,obj)
+            if album_item.cover is '':
+                album_item.cover = image.url 
+
             images_list.append(image)
 
         if os.path.isdir(src_obj_path):
@@ -78,8 +82,23 @@ def createAlbums(srcPath,dstPath,urlPath):
 
 
     """if albums_list or  image_list is not none"""
-    generator_html(dstPath,album_item.name ,images_list,albums_list)
-    return album
+    generator_html(dstPath + '/index.html','gallery.jinja2', { 
+                    'title' : 'Gatom'    ,
+                    'images' : images_list,
+                    'albums' : albums_list, })
+
+    return album_item
+
+
+def createStatic(dstPath):
+    if not os.path.exists(os.path.join(dstPath,'css')):
+        shutil.copytree('css',os.path.join(dstPath,'css'))
+    if not os.path.exists(os.path.join(dstPath,'js')):
+        shutil.copytree('js',os.path.join(dstPath,'js'))
+    if not os.path.exists(os.path.join(dstPath,'fonts')):
+        shutil.copytree('fonts',os.path.join(dstPath,'fonts'))
+    if not os.path.exists(os.path.join(dstPath,'images')):
+        shutil.copytree('images',os.path.join(dstPath,'images'))
             
 
 def buildGallery(srcPath,dstPath):
@@ -88,14 +107,11 @@ def buildGallery(srcPath,dstPath):
     urlPath = '/'
 
     if not os.path.exists(dstPath):
-        print dstPath
         os.mkdir(dstPath)
-    createAlbums(srcPath,dstPath,os.path.join(urlPath,os.path.basename(dstPath)))
 
-    
+    createStatic(dstPath)
 
-            
-
+    createAlbums(srcPath,dstPath,os.path.join(urlPath))
     
 
 def process(args):
