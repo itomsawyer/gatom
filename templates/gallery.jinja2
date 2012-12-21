@@ -7,18 +7,17 @@
     <meta name="author" content="Sergey Pimenov">
     <meta name="keywords" content="windows 8, modern style, modern ui, style, modern, css, framework">
 
-    <link href="css/modern.css" rel="stylesheet">
-    <link href="css/theme-dark.css" rel="stylesheet">
-    <link href="css/modern-responsive.css" rel="stylesheet">
+    <link href="/css/modern.css" rel="stylesheet">
+    <link href="/css/theme-dark.css" rel="stylesheet">
+    <link href="/css/modern-responsive.css" rel="stylesheet">
 
-    <script src="js/assets/jquery-1.8.2.min.js"></script>
-    <script src="js/assets/google-analytics.js"></script>
-    <script src="js/assets/jquery.mousewheel.min.js"></script>
-    <script src="js/assets/github.info.js"></script>
-    <script src="js/modern/tile-slider.js"></script>
-    <script src="js/modern/tile-drag.js"></script>
+    <script src="/js/assets/jquery-1.8.2.min.js"></script>
+    <script src="/js/assets/google-analytics.js"></script>
+    <script src="/js/assets/jquery.mousewheel.min.js"></script>
+    <script src="/js/assets/github.info.js"></script>
+    <script src="/js/modern/tile-slider.js"></script>
 
-    <title>Modern UI CSS</title>
+    <title>{{ title }}</title>
 
     <style>
         body {
@@ -72,59 +71,58 @@
             <div class="user-login">
                 <a href="#">
                     <div class="name">
-                        <span class="first-name">Sergey</span>
-                        <span class="last-name">Pimenov</span>
+                        <span class="first-name">Tom</span>
+                        <span class="last-name">Sawyer</span>
                     </div>
                     <div class="avatar">
-                        <img src="images/myface.jpg"/>
+                        <img src="/images/myface.jpg"/>
                     </div>
                 </a>
             </div>
 
-            <h1>Start</h1>
+            <h1>Tom's Gallery</h1>
         </div>
     </div>
 
     <div class="page-region">
         <div class="page-region-content tiles">
+
+            {% if albums is defined%} 
             <div class="tile-group tile-drag">
+                {% for album in albums %}
+                <div class="tile double outline-color-green image">
+                    <div class="tile-content" onclick=" window.location.href='{{album.url}}'">
+                        <img href="{{ album.url }}" src="{{ album.cover }}" alt="" />
+                    </div>
+                    <div class="brand">
+                        <!-- <span class="name ">{{ album.name }}</span> -->
+                        <div class="overlay">{{ album.name }} </div>
+                        <div class="badge bg-color-orange">{{ album.totalSubAlbum}}</div>
+                        <div class="badge bg-color-blue">{{ album.totalPhoto}}</a></div>
+                    </div>
+                </div>
+                {% endfor %}
+           </div>
+           {% endif %}
+
+            <div class="tile-group tile-drag">
+                <div class="image-collection">
+                {% for image in images %}
+                <!--
                 <div class="tile image outline-color-green">
                     <div class="tile-content">
-                        <img src="images/myface.jpg" alt="">
+                        <img src="{{ image.url }}" alt="">
                     </div>
                 </div>
-
-                <div class="tile icon">
-                    <div class="tile-content">
-                        <img src="images/Mail128.png"/>
+                -->
+                    <div class="outline-color-green image">
+                        <span class="top-left tertiary-info-text">{{image.name}}</span>
+                        <img src="{{image.url}}" alt="">
+                        <div class="overlay"></div>
                     </div>
-                    <div class="brand">
-                        <div class="badge">10</div>
-                        <div class="name">Mail</div>
-                    </div>
+                {% endfor %}
                 </div>
-
-                <div class="tile bg-color-orangeDark icon">
-                    <b class="check"></b>
-                    <div class="tile-content">
-                        <img src="images/Video128.png" alt="" />
-                    </div>
-                    <div class="brand">
-                        <span class="name">Video</span>
-                    </div>
-                </div>
-
-                <div class="tile double image outline-color-green">
-                    <div class="tile-content">
-                        <img src="images/5.jpg" alt="" />
-                    </div>
-                    <div class="brand">
-                        <span class="name">Pictures</span>
-                        <div class="badge bg-color-orange">5</div>
-                    </div>
-                </div>
-           
-        </div>
+            </div>
     </div>
 </div>
 <a href='http://hit.ua/?x=19154' target='_blank'>
