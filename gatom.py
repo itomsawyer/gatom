@@ -141,8 +141,8 @@ def main():
     parser = argparse.ArgumentParser(description='Gatom static gallery auto generator.')
     parser.add_argument('--src',required=True ,help='Source directory for the gallery')
     parser.add_argument('--dst', help='Destination where the gallery site will be generated')
-    parser.add_argument('--port', help='Web server listening port.Default is 8012')
-    parser.add_argument('--server',action='store_true',help='Run web server for generated gallery')
+    parser.add_argument('--port', help='Web server listening port. Default value is 8012')
+    parser.add_argument('--server',action='store_true',help='Whether or not run web server for newly generated gallery ')
     args = parser.parse_args()
     process(args)
 
