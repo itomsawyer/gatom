@@ -14,6 +14,7 @@ env = Environment(loader = PackageLoader('gatom','templates'))
 class album:
     name = 'gallery'
     url = '/gallery'
+    carousel_url = ''
     cover = ''
     totalPhoto = 0
     totalSubAlbum = 0
@@ -54,6 +55,7 @@ def createAlbums(srcPath,dstPath,urlPath):
 
     album_item.name =os.path.basename(dstPath)
     album_item.url = urlPath
+    album_item.carousel_url = urlPath + '/album.html'
 
     print "Processing Album " + album_item.name + " in " +dstPath + " ..."
     
@@ -89,9 +91,11 @@ def createAlbums(srcPath,dstPath,urlPath):
         args['images'] = images_list
     if albums_list:
         args['albums'] = albums_list
+    if album_item:
+        args['currentAlbum'] = album_item
     
     generator_html(os.path.join(dstPath ,'index.html'),'gallery.jinja2', args)
-    generator_html(os.path.join(dstPath ,'album.html'),'menu.jinja2', args)
+    generator_html(os.path.join(dstPath ,'album.html'),'album.jinja2', args)
 
     return album_item
 

@@ -5,6 +5,8 @@ A simple static gallery website auto generator
 
 python 2.6 is required .
 
+GPL lisence.
+
 Manual:
 
     python gatom.py

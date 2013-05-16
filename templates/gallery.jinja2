@@ -117,7 +117,7 @@
                 -->
                     <div class="outline-color-green image">
                         <span class="top-left tertiary-info-text">{{image.name}}</span>
-                        <img src="{{image.url}}" alt="">
+                        <img src="{{image.url}}" onclick="window.location.href='{{currentAlbum.carousel_url}}'" />
                         <div class="overlay"></div>
                     </div>
                 {% endfor %}
